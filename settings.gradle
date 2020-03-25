@@ -1,2 +1,3 @@
 rootProject.name='ShareScreenshot'
 include ':app'
+include ':screenshare'
