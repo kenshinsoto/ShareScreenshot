@@ -30,7 +30,9 @@ object FileBitmap {
     private fun getOutputMediaFile(context: Context, filename: String): File? {
         // TODO verificar la disponibilidad del directorio externo usando Environment.getExternalStorageState()
         val pathName =
-            "${context.getExternalFilesDir(Environment.DIRECTORY_PICTURES)}${File.separator}${getAppName(context)}${File.separator}"
+            "${context.getExternalFilesDir(Environment.DIRECTORY_PICTURES)?.absolutePath}${File.separator}${getAppName(
+                context
+            )}${File.separator}"
         val mediaStorageDirectory = File(pathName)
         // crear el directorio si no existe
         if (!mediaStorageDirectory.exists()) {

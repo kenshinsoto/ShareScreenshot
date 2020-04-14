@@ -4,12 +4,12 @@ import android.app.Activity
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.os.Build
+import android.view.View
 import androidx.core.content.FileProvider
+import com.kristianconk.screenshare.Screenshot.screenshotOfView
 import java.io.File
 
 object Share {
-
-
 
     fun shareImage(
         activity: Activity,
@@ -47,5 +47,17 @@ object Share {
             }
         }
         activity.startActivity(Intent.createChooser(shareIntent, "Share"))
+    }
+
+    fun shareScreenshot(
+        activity: Activity,
+        message: String?,
+        view: View,
+        desiredWidth: Int = 0,
+        desiredHeight: Int = 0
+    ) {
+        val bitmapFromView = screenshotOfView(view, desiredWidth, desiredHeight)
+        val fileToShare = FileBitmap.saveBitmapToFile(activity, bitmapFromView, "screenshot")
+        shareImage(activity, fileToShare, message)
     }
 }
