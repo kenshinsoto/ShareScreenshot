@@ -1,6 +1,15 @@
 apply plugin: 'com.android.library'
 apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
+apply plugin: 'maven-publish'
+
+def getVersionName = { ->
+    return "0.1"
+}
+
+def getArtifactId = { ->
+    return "screenshare"
+}
 
 android {
     compileSdkVersion 29
@@ -10,7 +19,7 @@ android {
         minSdkVersion 14
         targetSdkVersion 29
         versionCode 1
-        versionName "1.0"
+        versionName getVersionName()
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         consumerProguardFiles 'consumer-rules.pro'
@@ -42,4 +51,27 @@ dependencies {
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'androidx.test.ext:junit:1.1.1'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0'
+}
+
+project.afterEvaluate {
+    publishing {
+        repositories {
+            maven {
+                name "GitHub"
+                url = uri("https://maven.pkg.github.com/kenshinsoto/ShareScreenshot")
+                credentials {
+                    username = ""
+                    password = ""
+                }
+            }
+        }
+        publications {
+            androidLib(MavenPublication) {
+                groupId = "com.kristianconk"
+                artifactId = getArtifactId()
+                artifact(bundleReleaseAar)
+                version = getVersionName()
+            }
+        }
+    }
 }
