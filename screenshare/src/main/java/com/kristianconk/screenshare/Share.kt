@@ -11,6 +11,13 @@ import java.io.File
 
 object Share {
 
+    /**
+     * Lanza un intento de compartir un archivo del tipo File miage/jpeg
+     *
+     * @param activity Requerida para acceder al contexto y lanzar el intento
+     * @param file archivo tipo image/jpeg que se desea compartir
+     * @param message mensaje opcional que se incluye al compartir
+     */
     fun shareImage(
         activity: Activity,
         file: File,
@@ -49,6 +56,15 @@ object Share {
         activity.startActivity(Intent.createChooser(shareIntent, "Share"))
     }
 
+    /**
+     * Lanza un intento de compartir una imagen/creenshot a partir de un View
+     *
+     * @param activity Requerido para aceder al contexto y lanzar el intento
+     * @param message mensaje opcional que se incluye al compartir
+     * @param view vista de la cual se va a generar el screenshot
+     * @param desiredWidth ancho deseado de la imagen resultante
+     * @param desiredHeight alto deseado de la imagen resultante
+     */
     fun shareScreenshot(
         activity: Activity,
         message: String?,

@@ -12,23 +12,31 @@ import java.util.*
 
 object FileBitmap {
 
+    /**
+     * Guarda un bitmap en el sistema de archivos de la aplicación
+     *
+     * @param context Contexto de la aplicacion requerido para acceder al media system
+     * @param image Bitmap a guardar
+     * @param filename nombre de la imagen a guardar
+     * @return File de la imagen guardada
+     */
     fun saveBitmapToFile(context: Context, image: Bitmap, filename: String): File {
         val bitmapFile = getOutputMediaFile(context, filename)
             ?: throw NullPointerException("Error creating media file, check storage permissions!")
         val fos = FileOutputStream(bitmapFile)
         image.compress(Bitmap.CompressFormat.JPEG, 90, fos)
         fos.close()
-
-        // se realiza un escaneo de imagenes para que esté disponible
-        MediaScannerConnection.scanFile(
-            context, arrayOf(bitmapFile.path),
-            arrayOf("image/jpeg"), null
-        )
         return bitmapFile
     }
 
+    /**
+     * Genera el archivo en la carpeta de contenido fotos de la aplicación
+     *
+     * @param context Requerido para acceder al sistema de archivos
+     * @param filename nombre con el que se va a guardar
+     * @return Archivo si es que se pudo crear
+     */
     private fun getOutputMediaFile(context: Context, filename: String): File? {
-        // TODO verificar la disponibilidad del directorio externo usando Environment.getExternalStorageState()
         val pathName =
             "${context.getExternalFilesDir(Environment.DIRECTORY_PICTURES)?.absolutePath}${File.separator}${getAppName(
                 context
@@ -48,6 +56,12 @@ object FileBitmap {
         return mediaFile
     }
 
+    /**
+     * Recupera el nombre de la aplicación
+     *
+     * @param context Requerido para acceder al package manager
+     * @return Nombre de la aplicación actual
+     */
     private fun getAppName(context: Context): String {
         val pm = context.packageManager
         val appInfo = pm.getApplicationInfo(context.packageName, PackageManager.GET_META_DATA)
