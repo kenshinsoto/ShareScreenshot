@@ -6,6 +6,14 @@ import android.view.View
 
 object Screenshot {
 
+    /**
+     * Crea un screenshot de un view
+     *
+     * @param view Vista de la cual se desea obtener la captura
+     * @param desiredHeight Altura deseada de la captura
+     * @param desiredWidth Ancho deseado de la captura
+     * @return Bitmap de la vista
+     */
     fun screenshotOfView(view: View, desiredWidth: Int = 0, desiredHeight: Int = 0): Bitmap {
         if (desiredWidth > 0 && desiredHeight > 0) {
             val density = view.resources.displayMetrics.density.toInt()
